@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <!-- 屏幕时长监测：需用户手动在系统设置中授权「使用情况访问权限」 -->
+
+    <!-- 真实阳光验证：光线传感器 + 定位 + 步数 -->
+    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
+    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
+    <uses-permission android:name="android.permission.ACCESS_BACKGROUND_LOCATION" />
+    <uses-permission android:name="android.permission.ACTIVITY_RECOGNITION" />
+
+    <!-- 通知（连续使用提醒、目标达成） -->
+    <uses-permission android:name="android.permission.POST_NOTIFICATIONS" />
+    <uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED" />
+
+    <!-- 网络（天气 API，可失败降级） -->
+    <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+
+    <!-- 前台服务：MIUI / HyperOS / ColorOS 等国产 ROM 对后台传感器管控极严，
+ App 切到后台后光线/步数传感器会直接停止回调，必须靠前台服务维持采样 -->
+    <uses-permission android:name="android.permission.FOREGROUND_SERVICE" />
+    <uses-permission android:name="android.permission.FOREGROUND_SERVICE_SPECIAL_USE" />
+
+    <!-- 传感器为可选硬件：无光感设备时自动降级为「定位+步数」双路校验 -->
+    <uses-feature android:name="android.hardware.sensor.light" android:required="false" />
+    <uses-feature android:name="android.hardware.sensor.stepcounter" android:required="false" />
+    <uses-feature android:name="android.hardware.location" android:required="false" />
+
+    <application
+        android:name=".SunshineApp"
+        android:allowBackup="true"
+        android:icon="@mipmap/ic_launcher"
+        android:label="@string/app_name"
+        android:roundIcon="@mipmap/ic_launcher"
+        android:supportsRtl="true"
+        android:theme="@style/Theme.SunshineExchange"
+        tools:targetApi="34">
+
+<!-- 传感器采样前台服务：保证切后台后仍能读取光线/步数。
+     【重要】foregroundServiceType 用 specialUse 而非 health：
+     Android 14 对 health 类型有严格的资格校验（需 BODY_SENSORS 等权限），
+     未满足时会直接抛 SecurityException 导致闪退。specialUse 无此限制，
+     配合下方 FOREGROUND_SERVICE_SPECIAL_USE 权限在各版本均可用。 -->
+        <service
+ android:name=".core.SensorForegroundService"
+            android:enabled="true"
+            android:exported="false"
+            android:foregroundServiceType="specialUse">
+            <property
+   android:name="android.app.PROPERTY_SPECIAL_USE_FGS_SUBTYPE"
+      android:value="户外光照与步数传感器持续采样（本作品核心验证流程所需）" />
+   </service>
+
+        <activity
+            android:name=".MainActivity"
+            android:exported="true"
+            android:label="@string/app_name"
+            android:theme="@style/Theme.SunshineExchange">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+    </application>
+</manifest>

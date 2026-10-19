@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- 天空之城主色：晴空蓝 -->
+    <color name="sky_top">#FF1B6FD1</color>
+    <color name="sky_bottom">#FF7FC4F5</color>
+    <color name="sun_gold">#FFFFB020</color>
+    <color name="brand_primary">#FF2B7FE0</color>
+    <color name="window_background">#FFFAFCFF</color>
+    <color name="ic_launcher_background">#FF2B7FE0</color>
+</resources>

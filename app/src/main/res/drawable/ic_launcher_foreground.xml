@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- 启动图标前景：太阳 + 天空之城剪影 -->
+<vector xmlns:android="http://schemas.android.com/apk/res/android"
+    android:width="108dp"
+    android:height="108dp"
+    android:viewportWidth="108"
+    android:viewportHeight="108">
+    <!-- 太阳 -->
+    <path
+        android:fillColor="#FFFFD54F"
+        android:pathData="M54,34m-13,0a13,13 0,1 1,26 0a13,13 0,1 1,-26 0" />
+    <!-- 光芒 -->
+    <path
+        android:fillColor="#FFFFB020"
+        android:pathData="M52,18h4v8h-4z M52,42h4v8h-4z M36,32h8v4h-8z M64,32h8v4h-8z" />
+    <!-- 建筑剪影 -->
+    <path
+        android:fillColor="#FFFFFFFF"
+        android:pathData="M30,74h10v14h-10z M43,64h9v24h-9z M55,70h10v18h-10z M68,58h9v30h-9z" />
+    <!-- 地面 -->
+    <path
+        android:fillColor="#FFE3F2FD"
+        android:pathData="M26,88h56v4h-56z" />
+</vector>
